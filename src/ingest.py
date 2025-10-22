@@ -10,7 +10,7 @@ from langchain_postgres import PGVector
 
 load_dotenv()
 
-# Verificar variáveis de ambiente necessárias
+
 required_vars = ["GOOGLE_API_KEY", "PGVECTOR_URL", "GEMINI_VECTOR_COLLECTION"]
 for var in required_vars:
     if not os.getenv(var):
@@ -22,7 +22,7 @@ def ingest_pdf():
     """
     print("Iniciando processo de ingestão do PDF...")
     
-    # Caminho do PDF
+    
     current_dir = Path(__file__).parent.parent
     pdf_path = current_dir / "document.pdf"
     
@@ -31,7 +31,7 @@ def ingest_pdf():
     
     print(f"Carregando PDF: {pdf_path}")
     
-    # Carregar o PDF
+    
     loader = PyPDFLoader(str(pdf_path))
     docs = loader.load()
     
@@ -55,7 +55,7 @@ def ingest_pdf():
     
     print(f"Gerados {len(splits)} chunks")
     
-    # Limpar metadados
+    
     enriched_docs = []
     for i, doc in enumerate(splits):
         cleaned_metadata = {k: v for k, v in doc.metadata.items() if v not in ("", None)}
@@ -65,16 +65,16 @@ def ingest_pdf():
         )
         enriched_docs.append(new_doc)
     
-    # Gerar IDs únicos
+    
     ids = [f"doc-{i}" for i in range(len(enriched_docs))]
     
-    # Configurar embeddings
+    
     print("Configurando embeddings...")
     embeddings = GoogleGenerativeAIEmbeddings(
         model=os.getenv("GEMINI_EMBEDDING_MODEL", "models/embedding-001")
     )
     
-    # Configurar vector store
+    
     print("Conectando ao banco de dados vetorial...")
     vector_store = PGVector(
         embeddings=embeddings,
@@ -83,7 +83,7 @@ def ingest_pdf():
         use_jsonb=True,
     )
     
-    # Adicionar documentos ao banco
+    
     print("Salvando documentos no banco de dados...")
     vector_store.add_documents(documents=enriched_docs, ids=ids)
     

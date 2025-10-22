@@ -60,6 +60,9 @@ GEMINI_VECTOR_COLLECTION=default_gemini_collection
 pip install -r requirements.txt
 pip install python-dotenv
 pip install langchain langchain-community langchain-core
+pip install langchain-google-genai
+pip install langchain-postgres
+pip install pypdf
 ```
 
 ## 🚀 Execução
