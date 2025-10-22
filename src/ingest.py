@@ -40,7 +40,6 @@ def ingest_pdf():
     
     print(f"Documento carregado com {len(docs)} páginas")
     
-    # Dividir em chunks
     print("Dividindo documento em chunks...")
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
