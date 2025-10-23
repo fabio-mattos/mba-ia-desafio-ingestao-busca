@@ -1,13 +1,16 @@
 from search import search_prompt
 
 def main():
-    print("Chat com Documentos - Sistema RAG")
+    print("=" * 50)
+    print("Ingestão e Busca Semântica com LangChain e Postgres")
+    print("Aluno: Fábio Celso de Mattos")
+    print("Curso: MBA em Engenharia de Software com IA - FullCycle")
+    print("Turma: Setembro 2025");
     print("=" * 50)
     print("Digite suas perguntas sobre o documento PDF.")
     print("Digite 'sair' para encerrar o programa.")
     print("=" * 50)
-    
-    # Configurar a chain de busca
+
     print("Inicializando sistema de busca...")
     chain = search_prompt()
 

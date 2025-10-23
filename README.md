@@ -1,8 +1,10 @@
 # Ingestão e Busca Semântica com LangChain e Postgres
 
-Desafio Tecnico - MBA IA Engenharia de Software - FullCycle\
-Aluno: Fábio Celso de Mattos\
-Turma: Setembro 2025
+### Desafio Tecnico - MBA IA Engenharia de Software - FullCycle
+
+### Aluno: Fábio Celso de Mattos
+
+### Turma: Setembro 2025
 
 ---
 
@@ -48,7 +50,7 @@ cd mba-ia-desafio-ingestao-busca
 Configure sua API Key no arquivo `.env`:
 
 ```env
-GOOGLE_API_KEY=[troque_esse_testo_pela_sua_api_key]
+GOOGLE_API_KEY=[troque_esse_texto_pela_sua_api_key]
 GEMINI_EMBEDDING_MODEL=models/embedding-001
 PGVECTOR_URL=postgresql+psycopg://postgres:postgres@localhost:5432/rag
 GEMINI_VECTOR_COLLECTION=default_gemini_collection
