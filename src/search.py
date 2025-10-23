@@ -46,19 +46,16 @@ def search_prompt():
     Configura e retorna a chain de busca RAG
     """
     try:
-        # Verificar variáveis de ambiente
         required_vars = ["GOOGLE_API_KEY", "PGVECTOR_URL", "GEMINI_VECTOR_COLLECTION"]
         for var in required_vars:
             if not os.getenv(var):
                 print(f"Variável de ambiente {var} não está configurada")
                 return None
         
-        # Configurar embeddings
         embeddings = GoogleGenerativeAIEmbeddings(
             model=os.getenv("GEMINI_EMBEDDING_MODEL", "models/embedding-001")
         )
         
-        # Configurar vector store
         vector_store = PGVector(
             embeddings=embeddings,
             collection_name=os.getenv("GEMINI_VECTOR_COLLECTION", "default_gemini_collection"),
@@ -66,19 +63,16 @@ def search_prompt():
             use_jsonb=True,
         )
         
-        # Criar retriever - busca os 10 documentos mais relevantes
         retriever = vector_store.as_retriever(search_kwargs={"k": 10})
         
-        # Configurar o modelo de linguagem
+        # Configurar o modelo de linguagem da llm
         llm = ChatGoogleGenerativeAI(
             model="gemini-1.5-flash",
             temperature=0
         )
         
-        # Criar o prompt template
         prompt = ChatPromptTemplate.from_template(PROMPT_TEMPLATE)
         
-        # Criar a chain RAG
         rag_chain = (
             {"contexto": retriever | format_docs, "pergunta": RunnablePassthrough()}
             | prompt
@@ -97,12 +91,10 @@ def search_documents(query):
     Busca documentos relevantes para uma query específica
     """
     try:
-        # Configurar embeddings
         embeddings = GoogleGenerativeAIEmbeddings(
             model=os.getenv("GEMINI_EMBEDDING_MODEL", "models/embedding-001")
         )
         
-        # Configurar vector store
         vector_store = PGVector(
             embeddings=embeddings,
             collection_name=os.getenv("GEMINI_VECTOR_COLLECTION", "default_gemini_collection"),
@@ -110,7 +102,6 @@ def search_documents(query):
             use_jsonb=True,
         )
         
-        # Buscar documentos com score
         results = vector_store.similarity_search_with_score(query, k=10)
         
         return results
